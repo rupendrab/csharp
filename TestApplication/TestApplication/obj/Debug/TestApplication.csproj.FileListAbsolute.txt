@@ -1,0 +1,6 @@
+C:\Users\rupen\Documents\Visual Studio 2017\Projects\TestApplication\TestApplication\bin\Debug\TestApplication.exe.config
+C:\Users\rupen\Documents\Visual Studio 2017\Projects\TestApplication\TestApplication\bin\Debug\TestApplication.exe
+C:\Users\rupen\Documents\Visual Studio 2017\Projects\TestApplication\TestApplication\bin\Debug\TestApplication.pdb
+C:\Users\rupen\Documents\Visual Studio 2017\Projects\TestApplication\TestApplication\obj\Debug\TestApplication.exe
+C:\Users\rupen\Documents\Visual Studio 2017\Projects\TestApplication\TestApplication\obj\Debug\TestApplication.pdb
+C:\Users\rupen\documents\visual studio 2017\Projects\TestApplication\TestApplication\obj\Debug\TestApplication.csprojResolveAssemblyReference.cache

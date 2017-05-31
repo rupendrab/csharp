@@ -1,0 +1,6 @@
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\obj\Debug\ConsoleAppSqlServer.csprojResolveAssemblyReference.cache
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\bin\Debug\ConsoleAppSqlServer.exe.config
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\bin\Debug\ConsoleAppSqlServer.exe
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\bin\Debug\ConsoleAppSqlServer.pdb
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\obj\Debug\ConsoleAppSqlServer.exe
+c:\users\rupen\documents\visual studio 2017\Projects\ConsoleAppSqlServer\ConsoleAppSqlServer\obj\Debug\ConsoleAppSqlServer.pdb
