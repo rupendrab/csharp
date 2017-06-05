@@ -13,6 +13,8 @@ namespace TestApplication
 		// Class Instance Fields
 		int number01;
 
+        delegate string NoteFunction();
+
 		static void Main(string[] args)
 		{
 			int number = 0;
@@ -110,12 +112,76 @@ namespace TestApplication
             Console.Write("Calling Lock on ITarget: ");
             ITarget target = messageP1;
             target.Lock();
+            UseDelegate();
+            UseMulticastDelegate();
         }
 
         public static void SetMessages(Message message)
         {
             message.setBodyOfText("Polymorphism");
             Console.WriteLine(message.BodyOfText);
+        }
+
+        public static void UseDelegate()
+        {
+            Console.WriteLine("Start UseDelegate");
+            NoteFunction write, read;
+
+            write = new NoteFunction(WriteMethod);
+            write = WriteMethod;
+            read = ReadMethod;
+            write();
+            read();
+            WriteNoteInformation(write);
+            WriteNoteInformation(new NoteFunction(CalculateMethod));
+            Console.WriteLine("End UseDelegate");
+        }
+
+        public static void UseMulticastDelegate()
+        {
+            Console.WriteLine("Start UseMulticastDelegate");
+            NoteFunction multicastDelegate = null;
+            multicastDelegate += WriteMethod;
+            multicastDelegate += ReadMethod;
+            multicastDelegate -= WriteMethod;
+            WriteNoteInformation(multicastDelegate);
+            string returnString = multicastDelegate();
+            Console.WriteLine(returnString);
+            Console.WriteLine("End UseMulticastDelegate");
+        }
+
+        private static string WriteMethod()
+        {
+            Console.WriteLine("Writing");
+            return "Writing Method";
+        }
+
+        private static string ReadMethod()
+        {
+            Console.WriteLine("Reading");
+            return "Reading Method";
+        }
+
+        private static string CalculateMethod()
+        {
+            Console.WriteLine(5 + 5 * 3 / 2);
+            return "Calculate Method";
+        }
+
+        private static string WriteNoteInformation(NoteFunction writtenNote)
+        {
+            string returnString = "";
+
+            Console.WriteLine();
+            Console.WriteLine("-------------------------------- Note Information ---------------------------------");
+            if (writtenNote != null)
+            {
+                returnString = writtenNote();
+            }
+            Console.WriteLine("-------------------------------- End Note Information ---------------------------------");
+            Console.WriteLine();
+
+            return returnString;
         }
     }
 }
