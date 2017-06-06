@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TestApplication.Tools;
 using FantasyBook = TestApplication.Books.Fantasy;
+using Newtonsoft.Json;
+using Confluent.Kafka.Serialization;
+using Confluent.Kafka;
 
 namespace TestApplication
 {
@@ -114,6 +117,14 @@ namespace TestApplication
             target.Lock();
             UseDelegate();
             UseMulticastDelegate();
+            Console.WriteLine("Get JSON");
+            Console.WriteLine(GetJSON());
+            string json = GetJSON();
+            Account account = GetAccountFromJSON(json);
+            Console.WriteLine(account);
+            Console.WriteLine("Begin Publish to Kafka");
+            PublishToKafka("104.196.197.123:9092", "hello-kafka");
+            // PublishToKafka("105.196.197.123:9092", "hello-kafka");
         }
 
         public static void SetMessages(Message message)
@@ -182,6 +193,52 @@ namespace TestApplication
             Console.WriteLine();
 
             return returnString;
+        }
+
+        private static string GetJSON()
+        {
+            Account account = new Account
+            {
+                Email = "james@example.com",
+                Active = true,
+                CreatedDate = new DateTime(2013, 1, 20, 0, 0, 0, DateTimeKind.Utc),
+                Roles = new List<string>
+                {
+                    "User",
+                    "Admin"
+                }
+            };
+            string json = JsonConvert.SerializeObject(account);
+            return json;
+        }
+
+        public static Account GetAccountFromJSON(string json)
+        {
+            return JsonConvert.DeserializeObject<Account>(json);
+        }
+
+        public static void PublishToKafka(string brokerList, string topicName)
+        {
+            var config = new Dictionary<string, object> { { "bootstrap.servers", brokerList } };
+
+            using (var producer = new Producer<Null, string>(config, null, new StringSerializer(Encoding.UTF8)))
+            {
+                Console.WriteLine($"{producer.Name} producing on {topicName}. q to exit.");
+
+                string text;
+                while ((text = Console.ReadLine()) != "q")
+                {
+                    var deliveryReport = producer.ProduceAsync(topicName, null, text);
+                    deliveryReport.ContinueWith(task =>
+                    {
+                        Console.WriteLine($"Partition: {task.Result.Partition}, Offset: {task.Result.Offset}");
+                    });
+                }
+
+                // Tasks are not waited on synchronously (ContinueWith is not synchronous),
+                // so it's possible they may still in progress here.
+                producer.Flush(TimeSpan.FromSeconds(10).Milliseconds);
+            }
         }
     }
 }
